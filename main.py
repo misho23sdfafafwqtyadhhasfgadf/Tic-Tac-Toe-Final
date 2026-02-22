@@ -15,13 +15,16 @@ class TicTacToe:
     def crear_interfaz(self):
         # Crear la cuadrícula de 3x3 con nuevos estilos
         for i in range(9):
-            # Se añadieron estilos: fuente más grande, color de fondo (bg), color de letra (fg)
             boton = tk.Button(self.root, text="", font=('Helvetica', 24, 'bold'), width=5, height=2,
                               bg="#3c3f41", fg="white", activebackground="#575a5e",
                               command=lambda i=i: self.marcar_casilla(i))
-            # Se añadieron márgenes (padx, pady) para separar los botones
             boton.grid(row=i//3, column=i%3, padx=5, pady=5)
             self.botones.append(boton)
+            
+        # NUEVO CÓDIGO: Botón de Reinicio
+        boton_reinicio = tk.Button(self.root, text="Reiniciar Juego", font=('Arial', 14),
+                                   command=self.reiniciar_juego)
+        boton_reinicio.grid(row=3, column=0, columnspan=3, pady=10)
 
     def marcar_casilla(self, i):
         # Lógica básica de marcado con colores
@@ -34,10 +37,13 @@ class TicTacToe:
             
             # Cambio de turno simple
             self.turno = "O" if self.turno == "X" else "X"
-            
-            # NOTA PARA ESTUDIANTES:
-            # Aquí falta implementar la lógica para verificar ganador.
-            # Esta debe ser desarrollada en la rama 'feature-logic'.
+
+    # NUEVO CÓDIGO: Función para limpiar el tablero
+    def reiniciar_juego(self):
+        self.turno = "X"
+        self.tablero = [""] * 9
+        for boton in self.botones:
+            boton.config(text="", fg="white") # Resetea texto y color
 
 if __name__ == "__main__":
     root = tk.Tk()
