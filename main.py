@@ -1,34 +1,45 @@
 import tkinter as tk
 from tkinter import messagebox
+
 class TicTacToe:
- def __init__(self, root):
- self.root = root
- self.root.title("Tic Tac Toe - Práctica Git")
- self.turno = "X"
- self.tablero = [""] * 9
- self.botones = []
- self.crear_interfaz()
- def crear_interfaz(self):
- # Crear la cuadrícula de 3x3
- for i in range(9):
- boton = tk.Button(self.root, text="", font=('Arial', 20),
- width=5, height=2,
- command=lambda i=i: self.marcar_casilla(i))
- boton.grid(row=i//3, column=i%3)
- self.botones.append(boton)
- def marcar_casilla(self, i):
- # Lógica básica de marcado
- if self.tablero[i] == "":
- self.tablero[i] = self.turno
- self.botones[i].config(text=self.turno)
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Tic Tac Toe - Práctica Git")
+        # Color de fondo oscuro para la ventana
+        self.root.configure(bg="#2b2b2b") 
+        self.turno = "X"
+        self.tablero = [""] * 9
+        self.botones = []
+        self.crear_interfaz()
 
- # Cambio de turno simple
- self.turno = "O" if self.turno == "X" else "X"
+    def crear_interfaz(self):
+        # Crear la cuadrícula de 3x3 con nuevos estilos
+        for i in range(9):
+            # Se añadieron estilos: fuente más grande, color de fondo (bg), color de letra (fg)
+            boton = tk.Button(self.root, text="", font=('Helvetica', 24, 'bold'), width=5, height=2,
+                              bg="#3c3f41", fg="white", activebackground="#575a5e",
+                              command=lambda i=i: self.marcar_casilla(i))
+            # Se añadieron márgenes (padx, pady) para separar los botones
+            boton.grid(row=i//3, column=i%3, padx=5, pady=5)
+            self.botones.append(boton)
 
- # NOTA PARA ESTUDIANTES:
- # Aquí falta implementar la lógica para verificar ganador.
- # Esta debe ser desarrollada en la rama 'feature-logic'.
+    def marcar_casilla(self, i):
+        # Lógica básica de marcado con colores
+        if self.tablero[i] == "":
+            self.tablero[i] = self.turno
+            
+            # Colores dinámicos: Rojo para X, Azul para O
+            color = "#ff5555" if self.turno == "X" else "#5555ff"
+            self.botones[i].config(text=self.turno, fg=color)
+            
+            # Cambio de turno simple
+            self.turno = "O" if self.turno == "X" else "X"
+            
+            # NOTA PARA ESTUDIANTES:
+            # Aquí falta implementar la lógica para verificar ganador.
+            # Esta debe ser desarrollada en la rama 'feature-logic'.
+
 if __name__ == "__main__":
- root = tk.Window() if hasattr(tk, 'Window') else tk.Tk()
- juego = TicTacToe(root)
- root.mainloop()
+    root = tk.Tk()
+    juego = TicTacToe(root)
+    root.mainloop()
